@@ -5,9 +5,18 @@ public class PipeMovement : MonoBehaviour
 {
     public float Speed = 3;
 
+    void Start()
+    {
+        Speed = 3;
+    }
     void Update()
     {
         transform.Translate(Vector3.left * (Time.deltaTime * Speed));
+    }
+
+    public void IncreaseDifficulty()
+    {
+        Speed *= 1.05f;
     }
 
     public void SelfDisable()

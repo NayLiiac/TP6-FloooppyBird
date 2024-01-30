@@ -4,14 +4,14 @@ using UnityEngine;
 public class PipeObjectPool : MonoBehaviour
 {
     public GameObject PipePrefab;
-    public int PoolSize;
+    [SerializeField] private int _poolSize;
     [SerializeField] private List<GameObject> _poolList;
 
     public void Start()
     {
         _poolList = new List<GameObject>();
 
-        for (int i = 0; i < PoolSize; i++)
+        for (int i = 0; i < _poolSize; i++)
         {
             GameObject obj = Instantiate(PipePrefab);
             obj.SetActive(false);

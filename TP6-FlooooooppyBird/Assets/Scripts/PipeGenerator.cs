@@ -6,13 +6,11 @@ public class PipeGenerator : MonoBehaviour
 {
     [SerializeField] private List<Transform> _pipeSpawnPoints = new List<Transform>();
 
-    [SerializeField] PipeMovement _pipe;
     [SerializeField] PipeObjectPool _pipeObjectPool;
 
     private void Start()
     {
         StartCoroutine(StartGenerator());
-        _pipe.Speed = 3f;
     }
 
     public void GeneratePipe()
@@ -22,7 +20,7 @@ public class PipeGenerator : MonoBehaviour
         {
             pipeGameObject.transform.SetPositionAndRotation(_pipeSpawnPoints[Random.Range(0, _pipeSpawnPoints.Count)].position, Quaternion.Euler(0, 0, 0));
             pipeGameObject.SetActive(true);
-            IncreaseDifficulty();
+            pipeGameObject.GetComponent<PipeMovement>().IncreaseDifficulty();
         }
     }
 
@@ -30,10 +28,5 @@ public class PipeGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         GeneratePipe();
-    }
-
-    public void IncreaseDifficulty()
-    {
-        _pipe.Speed *= 1.05f;
     }
 }
