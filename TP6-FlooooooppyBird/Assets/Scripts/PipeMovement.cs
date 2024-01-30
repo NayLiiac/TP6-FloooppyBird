@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PipeMovement : MonoBehaviour
 {
-    public float Speed = 3;
+    [SerializeField] private float Speed = 3;
 
     void Start()
     {
