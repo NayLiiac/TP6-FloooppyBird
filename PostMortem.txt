@@ -1,0 +1,25 @@
+Différences entre diagramme UML et Floppy Bird achevé
+
+UML :
+4 scripts :
+BirdBehaviour, GameStatus, PipeGenerator, PipeMovement
+
+FloppyBird :
+7 scripts :
+BirdBehaviour, PipeGenerator, PipeMovement, ScoreUI, BirdScore, PipeObjectPool, RestartFloppyBird
+
+-> Tout d'abord, j'ai abandonné le GameStatus, je le trouvais pas pertinent étant donné qu'un flappy bird se lance de lui-même 
+-> BirdBehaviour a obtenu de nouvelles variables, IsAlive permettant d'utiliser le design pattern Observer pour vérifier que le joueur soit encore vivant 
+et _rigidbody,  permettant de pouvoir sauter en utilisant la méthode AddForce
+
+-> PipeGenerator a totalement changé, il accepte désormais une liste des différents points de spawn possibles; une référence à PipeObjectPool et une autre à PipeMovement.
+Il lance une coroutine uniquement au Start pour faire spawn la première Pipe après un léger délai. GeneratePipe() ne prend plus en paramètre un GameObject et va chercher un Pipe actuellement libre dans la _poolList de PipePoolObject.
+
+-> PipeMovement a désormais un SelfDisable(), qui est appelé lorsque le joueur marque un point, la méthode démarre une coroutine SelfDisabling prenant un entier signifiant le temps d'attente avant de rendre la Pipe contenue dans la liste de Pipe de PipeObjectPool disponible. Ce petit temps permet de faire sortir la Pipe de l'écran du joueur.
+Il a aussi une nouvelle méthode IncreaseDifficulty() pour augmenter sa vitesse de manière progressive
+
+-> BirdScore permet de compter le nombre de points obtenus lorsque le joueur passe dans la zone d'espace (collider en trigger) situé entre deux Pipes. Cela appelle la méthode AddScore() qui augmente de 1 le nombre de point du joueur.
+-> ScoreUi permet d'observer le changement de score du joueur afin d'update l'UI 
+
+-> PipeObjectPool utilise le design pattern Object Pool afin de réutiliser les mêmes Pipes plutôt que de créer et détruire les Pipes. 
+-> RestartFloppyBird contient une méthode RestartGame() pouvant s'appeler à partir d'un bouton d'UI lorsque celui-ci a observé que le joueur avait perdu.
